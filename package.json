@@ -1,7 +1,7 @@
 {
   "name": "FowClub",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Sergio Fuentes",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
@@ -37,5 +37,6 @@
     "@ionic/cli-plugin-ionic-angular": "1.4.1",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "config": { "ionic_source_map": "source-map" }
 }

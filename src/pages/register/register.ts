@@ -1,7 +1,9 @@
+import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -16,16 +18,19 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class RegisterPage {
 
   user = {} as User;
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams,private toast: ToastServiceProvider) {
   }
 
-  async register(user: User){
+  async register(user: User) {
     try {
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      console.log(result);
-    }
-    catch(err){
+      if (await this.userService.register(user.email, user.password)) {
+        this.navCtrl.push(LoginPage);
+      } else {
+        this.toast.createToast("Register failed! Please try again.")
+      }
+    } catch (err) {
       console.error(err);
     }
   }
+
 }

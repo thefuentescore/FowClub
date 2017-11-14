@@ -1,9 +1,10 @@
 import { HomePage } from './../home/home';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 
 
 /**
@@ -20,21 +21,30 @@ import { RegisterPage } from '../register/register';
 export class LoginPage {
 
   user = {} as User;
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
+    this.user = userService.getCurrentUser();
+    if(this.user){
+      this.setHome();
+    }
   }
 
-  async login(user: User){
+  async login(user: User) {
     try {
-      const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-      console.log(result);
-      if(result){
-        this.navCtrl.setRoot(HomePage);
+      if (await this.userService.login(user.email, user.password)) {
+        this.setHome();
+      } else {
+        this.toast.createToast("Login failed! Please check your email and password.");
       }
-    }catch(err){
+    } catch (err) {
       console.error(err);
     }
   }
-  register(){
+  register() {
     this.navCtrl.push(RegisterPage);
   }
+
+  private setHome(){
+    this.navCtrl.setRoot(HomePage);
+  }
 }
+

@@ -15,6 +15,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule} from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { ToastServiceProvider } from '../providers/toast-service/toast-service';
+import { CardServiceProvider } from '../providers/card-service/card-service';
+
 export const firebaseConfig ={
     apiKey: "AIzaSyCRxTC81mR-14RATQvbbhn3e0rU4lbH7XQ",
     authDomain: "fowclub-a27f3.firebaseapp.com",
@@ -50,7 +54,11 @@ export const firebaseConfig ={
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    UserServiceProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ToastServiceProvider,
+    CardServiceProvider
+
   ]
 })
 export class AppModule {}

@@ -1,9 +1,9 @@
+import { UserServiceProvider } from './../../providers/user-service/user-service';
+import { CardServiceProvider } from './../../providers/card-service/card-service';
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database/interfaces';
+import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Card } from '../../models/card';
 
 
 @Component({
@@ -11,30 +11,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  cardRef: AngularFireList<any>;
-  cards: Observable<any[]>;
+  cards: Observable < Card[] > ;
 
-  constructor(private afAuth: AngularFireAuth,private toast: ToastController,public navCtrl: NavController, public database: AngularFireDatabase){
-    this.cardRef = this.database.list('cards');
-    this.cards = this.cardRef.snapshotChanges().map(changes =>{
-      return changes.map(c => ({key: c.payload.key,...c.payload.val()}));
-    })
+  constructor(public cardService: CardServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController) {
+    if (userService.getCurrentUser()) {
+      this.cards = cardService.getAllCards();
+    }
   }
 
-  ionViewWillLoad(){
-    this.afAuth.authState.subscribe(data =>{
-      if(data && data.email && data.uid){
-      this.toast.create({
-        message : `Welcome to FowClub, ${data.email}`,
-        duration: 3000
-      }).present();
-      }
-      else{
-        this.toast.create({
-          message : 'Could not find authentication details',
-          duration: 3000
-        }).present();
-      }
-    });
+  ionViewWillLoad() {
+
   }
+
+
 }
