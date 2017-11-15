@@ -1,5 +1,4 @@
 import { HomePage } from './../home/home';
-import { User } from './../../models/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
@@ -20,21 +19,22 @@ import { ToastServiceProvider } from '../../providers/toast-service/toast-servic
 })
 export class LoginPage {
 
-  user = {} as User;
+  email : string;
+  password: string;
+
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-    this.user = userService.getCurrentUser();
-    if(this.user){
+    if(userService.isUserLogged()){
       this.setHome();
     }
   }
 
-  async login(user: User) {
+  login() {
     try {
-      if (await this.userService.login(user.email, user.password)) {
+      this.userService.login(this.email, this.password).then(() => {
         this.setHome();
-      } else {
-        this.toast.createToast("Login failed! Please check your email and password.");
-      }
+      }).catch(err =>{
+        this.toast.createToast("Cannot login, please check your email and password.")
+      });
     } catch (err) {
       console.error(err);
     }
@@ -43,8 +43,9 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
 
-  private setHome(){
+  setHome() {
     this.navCtrl.setRoot(HomePage);
   }
+
 }
 

@@ -1,6 +1,8 @@
+import { User } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from '../../models/user';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -10,56 +12,49 @@ import { User } from '../../models/user';
 */
 @Injectable()
 export class UserServiceProvider {
+  private basePath: string = '/users';
+  currentUser: User;
 
-  private currentUser = {} as User;
-
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase) {
     afAuth.auth.setPersistence("local");
-
-  }
-  register(email: string, password: string): boolean {
-    try {
-      const result = this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-      console.log(result);
-      if (result) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
-  }
-
-  login(email: string, password: string): boolean {
-    try {
-      const result = this.afAuth.auth.signInWithEmailAndPassword(email, password);
-      console.log(result);
-      if (result) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      console.error(err);
-      return false;
-    }
-  }
-  
-  getCurrentUser() : User{
-
-    this.afAuth.auth.onAuthStateChanged(user => {
+    this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.currentUser.email = user.email;
-        this.currentUser.userName = user.displayName;
-        this.currentUser.photo = user.photoURL;
-      } else {
-       this.currentUser =  null;
+        this.currentUser.$key = user.uid;
       }
-    });
-    return this.currentUser;
+    })
+  }
+
+  register(email: string, password: string): boolean{
+   try{
+      const result = this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      if(result){
+        return true;
+      }else{
+        return false;
+      }
+   }catch(err){
+     console.error(err);
+   }
+
+  }
+
+  login(email: string, password: string) {
+    try {
+      return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  isUserLogged(): boolean {
+    return this.afAuth.auth.currentUser ? true : false;
+  }
+
+  logOut() {
+    return this.afAuth.auth.signOut();
   }
 
 }
+
+
 

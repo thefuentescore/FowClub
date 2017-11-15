@@ -5,10 +5,12 @@
     </button>
     <ion-title>Home</ion-title>
   </ion-navbar>
+  <ion-searchbar  [(ngModel)]="searchName">
+</ion-searchbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let card of cards">
+  <ion-card *ngFor="let card of (cards | namedCard:searchName)">
     <ion-item>
       <h2>{{card.name}}</h2>
     </ion-item>

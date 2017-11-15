@@ -14,7 +14,7 @@ import 'firebase/storage';
 */
 @Injectable()
 export class CardServiceProvider {
-  cards: Observable < Card[] > ;
+  cards: Observable< Card[] > ;
   cardRef: AngularFireList < any > ;
 
   constructor(private database: AngularFireDatabase, private firebase: FirebaseApp) {
@@ -43,19 +43,22 @@ export class CardServiceProvider {
       // https://firebase.google.com/docs/storage/web/handle-errors
       switch (error.code) {
         case 'storage/object_not_found':
-          // File doesn't exist
+         console.error("Object Not Found!");
           break;
 
         case 'storage/unauthorized':
           // User doesn't have permission to access the object
+          console.error("Unauthorized access!");
           break;
 
         case 'storage/canceled':
           // User canceled the upload
+          console.error("Upload Canceled");
           break;
 
         case 'storage/unknown':
           // Unknown error occurred, inspect the server response
+          console.error("Unknown error!");
           break;
       }
     });

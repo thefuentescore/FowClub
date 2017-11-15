@@ -17,13 +17,15 @@ import { ToastServiceProvider } from '../../providers/toast-service/toast-servic
 })
 export class RegisterPage {
 
-  user = {} as User;
+  email:string;
+  password:string;
+
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams,private toast: ToastServiceProvider) {
   }
 
-  async register(user: User) {
+  async register() {
     try {
-      if (await this.userService.register(user.email, user.password)) {
+      if (await this.userService.register(this.email, this.password)) {
         this.navCtrl.push(LoginPage);
       } else {
         this.toast.createToast("Register failed! Please try again.")
