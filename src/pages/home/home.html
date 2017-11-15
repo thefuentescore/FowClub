@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let card of cards| async">
+  <ion-card *ngFor="let card of cards">
     <ion-item>
       <h2>{{card.name}}</h2>
     </ion-item>
     <ion-card-content>
-    <img [src]="this.cardService.getCardImage(card) | async" />
+      <img id="{{card.code}}" src="{{card.image}}" />
     </ion-card-content>
     <ion-row>
       <ion-col>

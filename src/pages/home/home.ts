@@ -1,9 +1,9 @@
+import { Card } from './../../models/card';
 import { UserServiceProvider } from './../../providers/user-service/user-service';
 import { CardServiceProvider } from './../../providers/card-service/card-service';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Card } from '../../models/card';
 
 
 @Component({
@@ -11,11 +11,15 @@ import { Card } from '../../models/card';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  cards: Observable < Card[] > ;
-
+  cards: Card[];
   constructor(public cardService: CardServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController) {
     if (userService.getCurrentUser()) {
-      this.cards = cardService.getAllCards();
+      cardService.getAllCards().forEach(cards =>{
+        this.cards = cards;
+        cards.forEach(card =>{
+          this.getCardImage(card);
+        })
+      });
     }
   }
 
@@ -23,5 +27,8 @@ export class HomePage {
 
   }
 
+  getCardImage(card: Card){
+    this.cardService.setCardImage(card);
+  }
 
 }

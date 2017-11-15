@@ -6,4 +6,5 @@ export class Card{
     attribute:string;
     set: string;
     format: string[];
+    image: string;
 }
