@@ -1,7 +1,7 @@
 import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { User } from '../../models/user';
+import { UserData } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 /**
@@ -17,22 +17,16 @@ import { ToastServiceProvider } from '../../providers/toast-service/toast-servic
 })
 export class RegisterPage {
 
-  email:string;
-  password:string;
+  email: string;
+  password: string;
 
-  constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams,private toast: ToastServiceProvider) {
-  }
+  constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {}
 
-  async register() {
-    try {
-      if (await this.userService.register(this.email, this.password)) {
-        this.navCtrl.push(LoginPage);
-      } else {
-        this.toast.createToast("Register failed! Please try again.")
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  register() {
+    this.userService.register(this.email, this.password).then(() => {
+      this.navCtrl.push(LoginPage);
+    });
   }
 
 }
+

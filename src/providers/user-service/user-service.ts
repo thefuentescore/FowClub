@@ -1,8 +1,11 @@
-import { User } from './../../models/user';
+import { firebaseConfig } from './../../app/app.module';
+import { UserData } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireObject } from 'angularfire2/database/interfaces';
+import { FirebaseApp } from 'angularfire2';
+import 'firebase/storage';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -12,49 +15,45 @@ import { Observable } from 'rxjs/Observable';
 */
 @Injectable()
 export class UserServiceProvider {
-  private basePath: string = '/users';
-  currentUser: User;
+  private basePath: string = 'users';
+  currentUser: AngularFireObject < UserData > = null;
+  userId: string;
 
-  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase) {
+  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
     afAuth.auth.setPersistence("local");
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.currentUser.$key = user.uid;
+        this.userId = user.uid;
       }
     })
   }
 
-  register(email: string, password: string): boolean{
-   try{
-      const result = this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-      if(result){
-        return true;
-      }else{
-        return false;
-      }
-   }catch(err){
-     console.error(err);
-   }
-
+  register(email: string, password: string) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
   login(email: string, password: string) {
-    try {
-      return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  isUserLogged(): boolean {
-    return this.afAuth.auth.currentUser ? true : false;
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   logOut() {
     return this.afAuth.auth.signOut();
   }
 
+  userProfileExist(){
+    return this.database.database.ref().child(this.basePath).child(this.userId);
+  }
+
+  createUserProfile(data: UserData) {
+    let storageRef = this.firebase.storage().ref();
+    let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo);
+    return uploadTask.then(()=>{
+      data.photo = uploadTask.snapshot.downloadURL;
+      this.database.object(`users/${this.userId}`).set(data);
+    });
+  }
 }
+
 
 
 

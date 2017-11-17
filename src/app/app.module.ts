@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from "@ionic-native/camera";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RegisterPage } from './../pages/register/register';
 import { LoginPage } from './../pages/login/login';
+import { ProfilePage } from '../pages/profile/profile';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,6 +22,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
 import { ToastServiceProvider } from '../providers/toast-service/toast-service';
 import { CardServiceProvider } from '../providers/card-service/card-service';
 import { PipesModule } from '../pipes/pipes.module';
+
 
 export const firebaseConfig ={
     apiKey: "AIzaSyCRxTC81mR-14RATQvbbhn3e0rU4lbH7XQ",
@@ -36,7 +39,8 @@ export const firebaseConfig ={
     LoginPage,
     RegisterPage,
     HomePage,
-    ListPage
+    ListPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,8 @@ export const firebaseConfig ={
     LoginPage,
     RegisterPage,
     HomePage,
-    ListPage
+    ListPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
@@ -61,7 +66,8 @@ export const firebaseConfig ={
     UserServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastServiceProvider,
-    CardServiceProvider
+    CardServiceProvider,
+    Camera
 
   ]
 })

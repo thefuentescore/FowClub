@@ -1,3 +1,4 @@
+import { ProfilePage } from './../profile/profile';
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -23,22 +24,23 @@ export class LoginPage {
   password: string;
 
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-    if(userService.isUserLogged()){
-      this.setHome();
-    }
+
+  }
+  
+  login() {
+    this.userService.login(this.email, this.password).then((data) => {
+      this.userService.userProfileExist().on('value', snapshot =>{
+        if(snapshot.exists()){
+          this.setHome();
+        }else{
+          this.navCtrl.setRoot(ProfilePage);
+        }
+      });
+    }).catch(err => {
+      this.toast.createToast("Cannot login, please check your email and password.")
+    });
   }
 
-  login() {
-    try {
-      this.userService.login(this.email, this.password).then(() => {
-        this.setHome();
-      }).catch(err =>{
-        this.toast.createToast("Cannot login, please check your email and password.")
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }
   register() {
     this.navCtrl.push(RegisterPage);
   }
@@ -47,5 +49,5 @@ export class LoginPage {
     this.navCtrl.setRoot(HomePage);
   }
 
-}
+  }
 
