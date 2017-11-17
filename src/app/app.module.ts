@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { Camera } from "@ionic-native/camera";
+import { Camera } from '@ionic-native/camera'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -10,6 +10,7 @@ import { ListPage } from '../pages/list/list';
 import { RegisterPage } from './../pages/register/register';
 import { LoginPage } from './../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
+import { AddCardToListPage } from './../pages/add-card-to-list/add-card-to-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,7 +41,8 @@ export const firebaseConfig ={
     RegisterPage,
     HomePage,
     ListPage,
-    ProfilePage
+    ProfilePage,
+    AddCardToListPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ export const firebaseConfig ={
     RegisterPage,
     HomePage,
     ListPage,
-    ProfilePage
+    ProfilePage,
+    AddCardToListPage
   ],
   providers: [
     StatusBar,

@@ -1,16 +1,10 @@
-import { UserData } from './../../models/user';
 import { Component } from '@angular/core';
+import { UserData } from './../../models/user';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { HomePage } from '../home/home';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -30,8 +24,10 @@ export class ProfilePage {
   takePhoto() {
     //camera options
     const options: CameraOptions = {
-      destinationType   : this.camera.DestinationType.DATA_URL,
-      sourceType        : this.camera.PictureSourceType.PHOTOLIBRARY
+      quality: 50,
+      destinationType : this.camera.DestinationType.DATA_URL,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
 
     this.camera.getPicture(options).then(imageData => {

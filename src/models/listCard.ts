@@ -6,7 +6,13 @@ export class ListCard{
     price: number = 0.0;
     rarity: Rarity =  Rarity.Default;
     brightness: Brightness = Brightness.Default;
-
+    constructor(){
+        this.card = null;
+        this.brightness = Brightness.Default;
+        this.state = State.Mint;
+        this.rarity = Rarity.Default;
+        this.price = 0.0;
+    }
 }
 enum Rarity{
     Default,

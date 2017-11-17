@@ -24,12 +24,16 @@ export class LoginPage {
   password: string;
 
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-
+    this.userService.checkAuthentication().subscribe(user =>{
+      if(user){
+        this.setHome();
+      }
+    });
   }
   
   login() {
     this.userService.login(this.email, this.password).then((data) => {
-      this.userService.userProfileExist().on('value', snapshot =>{
+      this.userService.getCurrentUser().on('value', snapshot =>{
         if(snapshot.exists()){
           this.setHome();
         }else{

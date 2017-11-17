@@ -16,7 +16,7 @@ import 'firebase/storage';
 @Injectable()
 export class UserServiceProvider {
   private basePath: string = 'users';
-  currentUser: AngularFireObject < UserData > = null;
+  currentUser:  UserData = null;
   userId: string;
 
   constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
@@ -40,13 +40,17 @@ export class UserServiceProvider {
     return this.afAuth.auth.signOut();
   }
 
-  userProfileExist(){
+  getCurrentUser(){
     return this.database.database.ref().child(this.basePath).child(this.userId);
+  }
+
+  checkAuthentication(){
+    return this.afAuth.authState;
   }
 
   createUserProfile(data: UserData) {
     let storageRef = this.firebase.storage().ref();
-    let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo);
+    let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo, 'data_url');
     return uploadTask.then(()=>{
       data.photo = uploadTask.snapshot.downloadURL;
       this.database.object(`users/${this.userId}`).set(data);

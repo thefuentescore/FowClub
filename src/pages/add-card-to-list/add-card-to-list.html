@@ -1,0 +1,33 @@
+<h3>{{card.card.name}}</h3>
+<ion-list>
+  <ion-item>
+    <ion-label>Card State</ion-label>
+    <ion-select [(ngModel)]="card.state">
+      <ion-option value="0">Mint</ion-option>
+      <ion-option value="1">NearMint</ion-option>
+      <ion-option value="2">Excellent</ion-option>
+      <ion-option value="3">Good</ion-option>
+      <ion-option value="4">LightPlayed</ion-option>
+      <ion-option value="5">Played</ion-option>
+      <ion-option value="6">Poor</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Brightness</ion-label>
+    <ion-select [(ngModel)]="card.brightness">
+      <ion-option value="0">Default</ion-option>
+      <ion-option value="1">Foil</ion-option>
+      <ion-option value="2">SuperFoil</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label>Rarity</ion-label>
+      <ion-select [(ngModel)]="card.rarity">
+        <ion-option value="0">Default</ion-option>
+        <ion-option value="1">FullArt</ion-option>
+        <ion-option value="2">Uber</ion-option>
+        <ion-option value="3">Promo</ion-option>
+        <ion-option value="4">Signed</ion-option>
+      </ion-select>
+    </ion-item>
+</ion-list>
