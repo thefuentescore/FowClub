@@ -1,6 +1,10 @@
+import { ToastServiceProvider } from './../../providers/toast-service/toast-service';
+import { Card } from './../../models/card';
 import { ListCard } from './../../models/listCard';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
+import { ListServiceProvider } from '../../providers/list-service/list-service';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
 
 /**
  * Generated class for the AddCardToListPage page.
@@ -14,14 +18,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'add-card-to-list.html',
 })
 export class AddCardToListPage {
-  card: ListCard = new ListCard();
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.card.card =  navParams.data;
-  }
+  card: Card;
+  listCard: ListCard = new ListCard();
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddCardToListPage');
+  constructor(private listService: ListServiceProvider, public navParams: NavParams, public viewCtrl: ViewController, public toast: ToastServiceProvider) {
+    this.card = navParams.data;
+    this.listCard.code = this.card.code;
+  }
+  addCardToSearchList() {
+    this.listService.addCardToSearchList(this.listCard).then(() => {
+      this.toast.createToast(this.card.name + " added to your list");
+      this.viewCtrl.dismiss();
+    });
+  }
+  addCardToOfferList() {
+    this.listService.addCardToOfferList(this.listCard).then(() => {
+      this.toast.createToast(this.card.name + " added to your list");
+      this.viewCtrl.dismiss();
+    });
   }
 
 }

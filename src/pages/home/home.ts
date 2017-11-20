@@ -29,7 +29,7 @@ export class HomePage {
   }
 
   openAddPopover(selected: Card){
-    let popover = this.popover.create(AddCardToListPage,selected);
+    let popover = this.popover.create(AddCardToListPage,selected,{cssClass:'card-popover'});
     popover.present();
   }
 

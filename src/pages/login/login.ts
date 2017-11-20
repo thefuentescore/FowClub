@@ -20,24 +20,30 @@ import { ToastServiceProvider } from '../../providers/toast-service/toast-servic
 })
 export class LoginPage {
 
-  email : string;
+  email: string;
   password: string;
 
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-    this.userService.checkAuthentication().subscribe(user =>{
-      if(user){
-        this.setHome();
+    this.userService.checkAuthentication().subscribe(user => {
+      if (user) {
+        this.userService.getDatabaseUser().on('value', snap => {
+          if (snap.exists()) {
+            this.setHome();
+          } else {
+            this.navCtrl.setRoot(ProfilePage);
+          }
+        });
       }
     });
   }
-  
+
   login() {
     this.userService.login(this.email, this.password).then((data) => {
-      this.userService.getCurrentUser().on('value', snapshot =>{
-        if(snapshot.exists()){
+      this.userService.getDatabaseUser().on('value', snapshot => {
+        if (snapshot.exists()) {
           this.setHome();
-        }else{
-          this.navCtrl.setRoot(ProfilePage);
+        } else {
+
         }
       });
     }).catch(err => {
@@ -52,6 +58,6 @@ export class LoginPage {
   setHome() {
     this.navCtrl.setRoot(HomePage);
   }
+}
 
-  }
 

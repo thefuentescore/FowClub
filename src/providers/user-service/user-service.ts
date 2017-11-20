@@ -16,7 +16,7 @@ import 'firebase/storage';
 @Injectable()
 export class UserServiceProvider {
   private basePath: string = 'users';
-  currentUser:  UserData = null;
+  currentUser: UserData = null;
   userId: string;
 
   constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
@@ -25,7 +25,7 @@ export class UserServiceProvider {
       if (user) {
         this.userId = user.uid;
       }
-    })
+    });
   }
 
   register(email: string, password: string) {
@@ -40,23 +40,28 @@ export class UserServiceProvider {
     return this.afAuth.auth.signOut();
   }
 
-  getCurrentUser(){
+  getDatabaseUser() {
     return this.database.database.ref().child(this.basePath).child(this.userId);
   }
 
-  checkAuthentication(){
+  checkAuthentication() {
     return this.afAuth.authState;
   }
 
   createUserProfile(data: UserData) {
-    let storageRef = this.firebase.storage().ref();
-    let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo, 'data_url');
-    return uploadTask.then(()=>{
-      data.photo = uploadTask.snapshot.downloadURL;
-      this.database.object(`users/${this.userId}`).set(data);
-    });
+    if (data.photo) {
+      let storageRef = this.firebase.storage().ref();
+      let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo, 'data_url');
+      return uploadTask.then(() => {
+        data.photo = uploadTask.snapshot.downloadURL;
+        this.database.object(`users/${this.userId}`).set(data);
+      });
+    } else {
+      return this.database.object(`users/${this.userId}`).set(data);
+    }
   }
 }
+
 
 
 

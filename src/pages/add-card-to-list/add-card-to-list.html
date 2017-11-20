@@ -1,8 +1,8 @@
-<h3>{{card.card.name}}</h3>
+<h3>{{card.name}}</h3>
 <ion-list>
   <ion-item>
     <ion-label>Card State</ion-label>
-    <ion-select [(ngModel)]="card.state">
+    <ion-select [(ngModel)]="listCard.state">
       <ion-option value="0">Mint</ion-option>
       <ion-option value="1">NearMint</ion-option>
       <ion-option value="2">Excellent</ion-option>
@@ -14,20 +14,37 @@
   </ion-item>
   <ion-item>
     <ion-label>Brightness</ion-label>
-    <ion-select [(ngModel)]="card.brightness">
+    <ion-select [(ngModel)]="listCard.brightness">
       <ion-option value="0">Default</ion-option>
       <ion-option value="1">Foil</ion-option>
       <ion-option value="2">SuperFoil</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
-      <ion-label>Rarity</ion-label>
-      <ion-select [(ngModel)]="card.rarity">
-        <ion-option value="0">Default</ion-option>
-        <ion-option value="1">FullArt</ion-option>
-        <ion-option value="2">Uber</ion-option>
-        <ion-option value="3">Promo</ion-option>
-        <ion-option value="4">Signed</ion-option>
-      </ion-select>
-    </ion-item>
+    <ion-label>Rarity</ion-label>
+    <ion-select [(ngModel)]="listCard.rarity">
+      <ion-option value="0">Default</ion-option>
+      <ion-option value="1">FullArt</ion-option>
+      <ion-option value="2">Uber</ion-option>
+      <ion-option value="3">Promo</ion-option>
+      <ion-option value="4">Signed</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-list>
+
+<ion-row>
+  <ion-col>
+    <!-- Float the icon left -->
+    <button ion-button small outline icon-left (click)="addCardToSearchList()">
+      <ion-icon name="add"></ion-icon>
+      Searched List
+    </button>
+  </ion-col>
+  <ion-col>
+    <!-- Float the icon left -->
+    <button ion-button small icon-left clear (click)="addCardToOfferList()"> 
+      <ion-icon name="add"></ion-icon>
+      Offered List
+    </button>
+  </ion-col>
+</ion-row>

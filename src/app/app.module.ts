@@ -23,6 +23,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
 import { ToastServiceProvider } from '../providers/toast-service/toast-service';
 import { CardServiceProvider } from '../providers/card-service/card-service';
 import { PipesModule } from '../pipes/pipes.module';
+import { ListServiceProvider } from '../providers/list-service/list-service';
 
 
 export const firebaseConfig ={
@@ -70,7 +71,8 @@ export const firebaseConfig ={
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastServiceProvider,
     CardServiceProvider,
-    Camera
+    Camera,
+    ListServiceProvider
 
   ]
 })
