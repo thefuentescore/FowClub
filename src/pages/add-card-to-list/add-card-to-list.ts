@@ -24,6 +24,8 @@ export class AddCardToListPage {
   constructor(private listService: ListServiceProvider, public navParams: NavParams, public viewCtrl: ViewController, public toast: ToastServiceProvider) {
     this.card = navParams.data;
     this.listCard.code = this.card.code;
+    this.listCard.name = this.card.name;
+    this.listCard.attribute = this.card.attribute.trim();
   }
   addCardToSearchList() {
     this.listService.addCardToSearchList(this.listCard).then(() => {

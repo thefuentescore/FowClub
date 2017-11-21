@@ -6,14 +6,6 @@ import { RegisterPage } from '../register/register';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -24,17 +16,7 @@ export class LoginPage {
   password: string;
 
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-    this.userService.checkAuthentication().subscribe(user => {
-      if (user) {
-        this.userService.getDatabaseUser().on('value', snap => {
-          if (snap.exists()) {
-            this.setHome();
-          } else {
-            this.navCtrl.setRoot(ProfilePage);
-          }
-        });
-      }
-    });
+
   }
 
   login() {
@@ -43,7 +25,7 @@ export class LoginPage {
         if (snapshot.exists()) {
           this.setHome();
         } else {
-
+          this.navCtrl.setRoot(ProfilePage);
         }
       });
     }).catch(err => {

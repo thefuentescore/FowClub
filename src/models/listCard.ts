@@ -2,11 +2,14 @@ import { Card } from "./card";
 
 export class ListCard{
     code: string;
+    name: string;
+    attribute: string;
     state : State = State.NearMint;
     price: number = 0.0;
     rarity: Rarity =  Rarity.Default;
     brightness: Brightness = Brightness.Default;
     constructor(){
+        this.name = "";
         this.code = "";
         this.brightness = Brightness.Default;
         this.state = State.Mint;

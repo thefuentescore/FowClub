@@ -1,3 +1,4 @@
+import { OfferedTab, SearchedTab } from './../pages/list/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -43,7 +44,9 @@ export const firebaseConfig ={
     HomePage,
     ListPage,
     ProfilePage,
-    AddCardToListPage
+    AddCardToListPage,
+    OfferedTab,
+    SearchedTab
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,9 @@ export const firebaseConfig ={
     HomePage,
     ListPage,
     ProfilePage,
-    AddCardToListPage
+    AddCardToListPage,
+    OfferedTab,
+    SearchedTab
   ],
   providers: [
     StatusBar,

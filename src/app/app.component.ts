@@ -1,3 +1,5 @@
+import { CardServiceProvider } from './../providers/card-service/card-service';
+import { ProfilePage } from './../pages/profile/profile';
 import { UserServiceProvider } from './../providers/user-service/user-service';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
@@ -7,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
+import { ListServiceProvider } from '../providers/list-service/list-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +24,14 @@ export class MyApp {
     component: any
   } > ;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private userService: UserServiceProvider) {
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen, 
+    private userService: UserServiceProvider, 
+    private cardService: CardServiceProvider, 
+    private listService: ListServiceProvider) 
+  {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -34,7 +44,6 @@ export class MyApp {
         component: ListPage
       }
     ];
-
   }
 
   initializeApp() {
@@ -42,6 +51,19 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+
+      this.userService.checkAuthentication().subscribe(user => {
+        if (user) {
+          this.userService.getDatabaseUser().on('value', snap => {
+            if (snap.exists()) {
+              this.nav.setRoot(HomePage);
+            } else {
+              this.nav.setRoot(ProfilePage);
+            }
+          });
+        }
+      });
+      
       this.splashScreen.hide();
     });
   }

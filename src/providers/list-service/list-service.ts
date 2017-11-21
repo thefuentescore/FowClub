@@ -1,5 +1,4 @@
 import { ListCard } from './../../models/listCard';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -19,8 +18,8 @@ export class ListServiceProvider {
 
 
   userId: string;
-  offerLists: Map < string, ListCard > = new Map < string, ListCard > ();
-  searchLists: Map < string, ListCard > = new Map < string, ListCard > ();
+  offerLists: Map < string, ListCard[] > = new Map < string, ListCard[] > ();
+  searchLists: Map < string, ListCard[] > = new Map < string, ListCard[] > ();
 
   constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
     afAuth.auth.setPersistence("local");
@@ -58,11 +57,24 @@ export class ListServiceProvider {
     });
   }
 
+  getCurrentUserSearchedList(){
+    return this.database.list(this.database.database.ref().child(this.basePathSearch).child(this.userId));
+  }
+  getCurrentUserOfferedList(){
+    return this.database.list(this.database.database.ref().child(this.basePathOffer).child(this.userId));
+  }
   addCardToOfferList(card: ListCard){
     return this.database.database.ref().child(this.basePathOffer).child(this.userId).child(card.code).set(card);
   }
   addCardToSearchList(card: ListCard){
     return this.database.database.ref().child(this.basePathSearch).child(this.userId).child(card.code).set(card);
   }
+  removeCardFromSearch(card: ListCard){
+    return this.database.database.ref().child(this.basePathSearch).child(this.userId).child(card.code).remove();
+  }
+  removeCardFromOffered(card: ListCard){
+    return this.database.database.ref().child(this.basePathOffer).child(this.userId).child(card.code).remove();
+  }
+
 }
 

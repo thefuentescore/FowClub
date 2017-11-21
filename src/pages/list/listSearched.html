@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Searched List</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let card of list">
+      <ion-item>
+        <ion-row>
+          <p>{{card.code}}</p>
+          <img id="attribute-img" src="../assets/icon/attributes/{{card.attribute}}.png" />
+        </ion-row>
+        <ion-row>
+          <h3>{{card.name}}</h3>
+        </ion-row>
+      </ion-item>
+      <ion-item-options slide="right">
+        <button ion-button color="primary">
+          <ion-icon name="hammer"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="removeCard(card)">
+          <ion-icon name="trash"></ion-icon>
+          Remove
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
