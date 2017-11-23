@@ -1,5 +1,3 @@
-import { Card } from "./card";
-
 export class ListCard{
     code: string;
     name: string;
@@ -8,26 +6,27 @@ export class ListCard{
     price: number = 0.0;
     rarity: Rarity =  Rarity.Default;
     brightness: Brightness = Brightness.Default;
+    listType: ListType;
     constructor(){
         this.name = "";
         this.code = "";
         this.brightness = Brightness.Default;
         this.state = State.Mint;
         this.rarity = Rarity.Default;
+        this.listType = ListType.OfferList;
         this.price = 0.0;
     }
 }
 enum Rarity{
     Default,
-    FullArt,
-    Uber,
     Promo,
     Signed
 }
 enum Brightness{
     Default,
     Foil,
-    SuperFoil
+    FullArt,
+    Uber
 }
 
 enum State{
@@ -38,4 +37,8 @@ enum State{
     LightPlayed,
     Played,
     Poor
+}
+enum ListType{
+    SearchList,
+    OfferList
 }

@@ -3,7 +3,6 @@ import { UserData } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireObject } from 'angularfire2/database/interfaces';
 import { FirebaseApp } from 'angularfire2';
 import 'firebase/storage';
 
@@ -44,14 +43,27 @@ export class UserServiceProvider {
     return this.database.database.ref().child(this.basePath).child(this.userId);
   }
 
+  getCurrentUserId() {
+    return this.userId;
+  }
+
   checkAuthentication() {
     return this.afAuth.authState;
   }
 
   createUserProfile(data: UserData) {
+
     if (data.photo) {
       let storageRef = this.firebase.storage().ref();
       let uploadTask = storageRef.child(`${this.basePath}/${this.userId}`).putString(data.photo, 'data_url');
+
+      this.afAuth.auth.currentUser.updateProfile({
+        displayName: data.userName,
+        photoURL: uploadTask.snapshot.downloadURL
+      }).catch(err => {
+        console.log(err);
+      })
+
       return uploadTask.then(() => {
         data.photo = uploadTask.snapshot.downloadURL;
         this.database.object(`users/${this.userId}`).set(data);
@@ -61,6 +73,7 @@ export class UserServiceProvider {
     }
   }
 }
+
 
 
 

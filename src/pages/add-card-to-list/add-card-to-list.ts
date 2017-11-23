@@ -28,12 +28,14 @@ export class AddCardToListPage {
     this.listCard.attribute = this.card.attribute.trim();
   }
   addCardToSearchList() {
+    this.listCard.listType = 0;
     this.listService.addCardToSearchList(this.listCard).then(() => {
       this.toast.createToast(this.card.name + " added to your list");
       this.viewCtrl.dismiss();
     });
   }
   addCardToOfferList() {
+    this.listCard.listType = 1;
     this.listService.addCardToOfferList(this.listCard).then(() => {
       this.toast.createToast(this.card.name + " added to your list");
       this.viewCtrl.dismiss();

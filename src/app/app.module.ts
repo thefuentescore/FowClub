@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { OfferedTab, SearchedTab } from './../pages/list/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -25,6 +26,10 @@ import { ToastServiceProvider } from '../providers/toast-service/toast-service';
 import { CardServiceProvider } from '../providers/card-service/card-service';
 import { PipesModule } from '../pipes/pipes.module';
 import { ListServiceProvider } from '../providers/list-service/list-service';
+import { ViewCardImagePage } from '../pages/view-card-image/view-card-image';
+import { EditListCardPage } from '../pages/edit-list-card/edit-list-card';
+import { MatchPage } from '../pages/match/match';
+import { MatchServiceProvider } from '../providers/location-service/location-service';
 
 
 export const firebaseConfig ={
@@ -46,7 +51,10 @@ export const firebaseConfig ={
     ProfilePage,
     AddCardToListPage,
     OfferedTab,
-    SearchedTab
+    SearchedTab,
+    ViewCardImagePage,
+    EditListCardPage,
+    MatchPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +75,10 @@ export const firebaseConfig ={
     ProfilePage,
     AddCardToListPage,
     OfferedTab,
-    SearchedTab
+    SearchedTab,
+    ViewCardImagePage,
+    EditListCardPage,
+    MatchPage
   ],
   providers: [
     StatusBar,
@@ -77,8 +88,9 @@ export const firebaseConfig ={
     ToastServiceProvider,
     CardServiceProvider,
     Camera,
-    ListServiceProvider
-
+    ListServiceProvider,
+    MatchServiceProvider,
+    Geolocation
   ]
 })
 export class AppModule {}

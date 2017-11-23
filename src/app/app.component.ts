@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ListServiceProvider } from '../providers/list-service/list-service';
+import { MatchPage } from '../pages/match/match';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,12 +36,17 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [{
-        title: 'Home',
+    this.pages = [
+      {
+        title: 'Matches',
+        component: MatchPage
+      },
+      {
+        title: 'Search',
         component: HomePage
       },
       {
-        title: 'List',
+        title: 'My Lists',
         component: ListPage
       }
     ];
@@ -74,7 +80,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  signOut() {    
+  signOut() {
     this.userService.logOut().then(()=>{
       this.nav.setRoot(LoginPage);
     });

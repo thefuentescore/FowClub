@@ -23,7 +23,8 @@ export class RegisterPage {
   constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {}
 
   register() {
-    this.userService.register(this.email, this.password).then(() => {
+    this.userService.register(this.email, this.password)
+    .then(() => {
       this.navCtrl.push(LoginPage);
     });
   }

@@ -64,6 +64,11 @@ export class CardServiceProvider {
     });
   }
 
+  downloadCardImage(code: string){
+    var childName = '/cards/' + code + '.png';
+    const ref = this.firebase.storage().ref().child(childName);
+    return ref.getDownloadURL();
+  }
 
 }
 

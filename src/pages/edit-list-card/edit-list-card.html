@@ -1,5 +1,5 @@
-<h3>{{card.name}}</h3>
 <ion-list>
+  <h3>{{listCard.name}}</h3>
   <ion-item>
     <ion-label>Card State</ion-label>
     <ion-select [(ngModel)]="listCard.state">
@@ -33,17 +33,6 @@
 
 <ion-row>
   <ion-col>
-    <!-- Float the icon left -->
-    <button ion-button small outline icon-left (click)="addCardToSearchList()">
-      <ion-icon name="add"></ion-icon>
-      Searched List
-    </button>
-  </ion-col>
-  <ion-col>
-    <!-- Float the icon left -->
-    <button ion-button small icon-left clear (click)="addCardToOfferList()"> 
-      <ion-icon name="add"></ion-icon>
-      Offered List
-    </button>
+    <button ion-button (click)="editCard()">Acept</button>
   </ion-col>
 </ion-row>

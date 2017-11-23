@@ -4,7 +4,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import 'firebase/storage';
-
 /*
   Generated class for the ListServiceProvider provider.
 
@@ -16,65 +15,58 @@ export class ListServiceProvider {
   private basePathOffer: string = 'offerLists';
   private basePathSearch: string = 'searchLists';
 
-
   userId: string;
-  offerLists: Map < string, ListCard[] > = new Map < string, ListCard[] > ();
-  searchLists: Map < string, ListCard[] > = new Map < string, ListCard[] > ();
 
   constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
     afAuth.auth.setPersistence("local");
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-        this.setListeners();
+      }else{
+        console.log("logged out");
       }
     });
   }
-  setListeners() {
-    const dbRefOffer = this.database.database.ref().child(this.basePathOffer);
-    const dbRefSearch = this.database.database.ref().child(this.basePathSearch);
-    //Offer
-    dbRefOffer.on('child_added', snap => {
-      this.offerLists.set(snap.key, snap.val());
-    });
-    dbRefOffer.on('child_removed', snap => {
-      if (this.offerLists.has(snap.key))
-        this.offerLists.delete(snap.key);
-    });
-    dbRefOffer.on('child_changed', snap=>{
-      this.offerLists.set(snap.key, snap.val());
-    });
-    //Search
-    dbRefSearch.on('child_added', snap => {
-      this.searchLists.set(snap.key, snap.val());
-    });
-    dbRefSearch.on('child_removed', snap => {
-      if (this.searchLists.has(snap.key))
-        this.searchLists.delete(snap.key);
-    });
-    dbRefSearch.on('child_changed', snap=>{
-      this.searchLists.set(snap.key, snap.val());
-    });
-  }
 
-  getCurrentUserSearchedList(){
+  //CURRENT USER SERVICES
+  getCurrentUserSearchedList() {
     return this.database.list(this.database.database.ref().child(this.basePathSearch).child(this.userId));
   }
-  getCurrentUserOfferedList(){
+  getCurrentUserOfferedList() {
     return this.database.list(this.database.database.ref().child(this.basePathOffer).child(this.userId));
   }
-  addCardToOfferList(card: ListCard){
+  addCardToOfferList(card: ListCard) {
     return this.database.database.ref().child(this.basePathOffer).child(this.userId).child(card.code).set(card);
   }
-  addCardToSearchList(card: ListCard){
+  addCardToSearchList(card: ListCard) {
     return this.database.database.ref().child(this.basePathSearch).child(this.userId).child(card.code).set(card);
   }
-  removeCardFromSearch(card: ListCard){
+  removeCardFromSearch(card: ListCard) {
     return this.database.database.ref().child(this.basePathSearch).child(this.userId).child(card.code).remove();
   }
-  removeCardFromOffered(card: ListCard){
+  removeCardFromOffered(card: ListCard) {
     return this.database.database.ref().child(this.basePathOffer).child(this.userId).child(card.code).remove();
   }
-
+  updateCardToOfferList(card: ListCard) {
+    return this.database.database.ref().child(this.basePathOffer).child(this.userId).child(card.code).update(card);
+  }
+  updateCardToSearchList(card: ListCard) {
+    return this.database.database.ref().child(this.basePathSearch).child(this.userId).child(card.code).update(card);
+  }
+  // GIVEN USER SERVICE
+  getUserSearchedList(id: string) {
+    return this.database.list(this.database.database.ref().child(this.basePathSearch).child(id));
+  }
+  getUserOfferedList(id: string) {
+    return this.database.list(this.database.database.ref().child(this.basePathOffer).child(id));
+  }
+  //ALL USERS SERVICE
+  getAllSearchedList() {
+    return this.database.list(this.database.database.ref().child(this.basePathSearch));
+  }
+  getAllOfferedList() {
+    return this.database.list(this.database.database.ref().child(this.basePathOffer));
+  }
 }
+
 

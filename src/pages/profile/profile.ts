@@ -1,3 +1,4 @@
+import { ToastServiceProvider } from './../../providers/toast-service/toast-service';
 import { Component } from '@angular/core';
 import { UserData } from './../../models/user';
 import { NavController, NavParams } from 'ionic-angular';
@@ -13,19 +14,24 @@ export class ProfilePage {
 
   user = {} as UserData;
 
-  constructor(private camera: Camera, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(private camera: Camera, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public toast: ToastServiceProvider) {}
 
   createProfile() {
-    this.userService.createUserProfile(this.user).then(() => {
-      this.navCtrl.setRoot(HomePage);
-    });
+    if (this.user.userName) {
+      this.userService.createUserProfile(this.user).then(() => {
+        this.navCtrl.setRoot(HomePage);
+      });
+    } else {
+      this.toast.createToast("Username cannot be empty!");
+    }
+
   }
 
   takePhoto() {
     //camera options
     const options: CameraOptions = {
       quality: 50,
-      destinationType : this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.DATA_URL,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
@@ -35,4 +41,5 @@ export class ProfilePage {
     });
   }
 }
+
 
