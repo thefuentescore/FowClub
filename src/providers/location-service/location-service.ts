@@ -1,11 +1,12 @@
+import { AngularFireList } from 'angularfire2/database/interfaces';
 import { ListCard } from './../../models/listCard';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import * as GeoFire from"geofire";
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
+import { Match } from '../../models/match';
 /*
   Generated class for the LocationServiceProvider provider.
 
@@ -17,12 +18,14 @@ export class MatchServiceProvider {
 
   dbLocationsRef: any;
   dbOfferListsRef: any;
-
+  dbUsersRef: any;
+  dbMatchRef: any;
+  dbSearchList: any;
   geoFire: any;
 
-  _nearbyUsers = new BehaviorSubject([]);
   userId: string;
-  matches: Map<string,Array<any>> = new Map<string, Array<any>>();
+  matches: Array < any > ;
+  currentUserSearchList: ListCard[];
 
   geolocationOptions = {
     maximumAge: 60000,
@@ -34,15 +37,25 @@ export class MatchServiceProvider {
     console.log('Hello LocationServiceProvider Provider');
     this.dbLocationsRef = this.database.database.ref().child('locations');
     this.dbOfferListsRef = this.database.database.ref().child('offerLists');
-    
+    this.dbMatchRef = this.database.database.ref().child('matches');
+    this.dbUsersRef = this.database.database.ref().child('users');
+    this.dbSearchList = this.database.database.ref().child('searchLists');
+
     this.geoFire = new GeoFire(this.dbLocationsRef);
 
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-      }
-      else{
-        console.log("logged out");
+        this.database.list(this.dbSearchList.child(this.userId)).snapshotChanges().map(changes => {
+          return changes.map(c => ({
+            key: c.key,
+            ...c.payload.val()
+          }));
+        }).forEach(cards => {
+          this.currentUserSearchList = cards;
+        });
+      } else {
+        console.log("not authentication")
       }
     });
 
@@ -58,9 +71,71 @@ export class MatchServiceProvider {
       .catch(err => console.log(err));
   }
 
-  get nearbyUsers(): Observable < any[] > {
-    return this._nearbyUsers.asObservable();
+  getMatches(): Observable < Match[] > {
+    return this.database.list(this.dbMatchRef.child(this.userId)).valueChanges();
+  }
+  removeMatches(): void{
+    return this.dbMatchRef.child(this.userId).remove();
+  }
+
+  updateMatches(radius: number, coords: Array < number > ) {
+    this.geoFire.query({
+        center: coords,
+        radius: radius
+      })
+      .on('key_entered', (key, location, distance) => {
+        if (key != this.userId) {
+
+          let match: Match;
+          let user: any;
+          let cards: any;
+
+          this.dbUsersRef.child(key).once("value", snap => {
+            user = snap.val();
+          }).then(() => {
+            this.dbOfferListsRef.child(key).once("value", snap => {
+              let offers: ListCard[] = [];
+              snap.forEach(element => {
+                offers.push(element.val());
+              });
+              if (this.isMatch(offers)) {
+                if (user.photo) {
+                  match = {
+                    user: user.userName,
+                    photo: user.photo,
+                    distance: Math.round(distance),
+                    cards: offers
+                  };
+                } else {
+                  match = {
+                    user: user.userName,
+                    photo: "assets/imgs/avatar.png",
+                    distance: Math.round(distance),
+                    cards: offers
+                  };
+                }
+                this.dbMatchRef.child(this.userId).child(key).set(match);
+              }
+            });
+          });
+        }
+      });
+  }
+
+  isMatch(list: ListCard[], ): boolean {
+    return list.some(r => {
+        for (var i = 0; i < this.currentUserSearchList.length; i++) {
+          if (this.currentUserSearchList[i].code == r.code) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+    );
   }
 
 }
+
+
 
