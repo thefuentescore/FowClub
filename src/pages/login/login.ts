@@ -5,6 +5,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-login',
@@ -15,8 +17,8 @@ export class LoginPage {
   email: string;
   password: string;
 
-  constructor(private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, private toast: ToastServiceProvider) {
-
+  constructor(public storate: Storage,private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public menu: MenuController, private toast: ToastServiceProvider) {
+    this.menu.swipeEnable(false);
   }
 
   login() {
@@ -29,6 +31,7 @@ export class LoginPage {
         }
       });
     }).catch(err => {
+      console.log(err);
       this.toast.createToast("Cannot login, please check your email and password.")
     });
   }

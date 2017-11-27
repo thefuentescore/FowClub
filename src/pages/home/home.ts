@@ -4,6 +4,8 @@ import { CardServiceProvider } from './../../providers/card-service/card-service
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { ListServiceProvider } from '../../providers/list-service/list-service';
 
 
 @Component({
@@ -13,7 +15,14 @@ import { PopoverController } from 'ionic-angular/components/popover/popover-cont
 export class HomePage {
   cards: Card[];
   searchName = "";
-  constructor(public popover: PopoverController,public cardService: CardServiceProvider, public navCtrl: NavController) {
+  constructor(public popover: PopoverController, 
+              public cardService: CardServiceProvider, 
+              public listService: ListServiceProvider,
+              public navCtrl: NavController, 
+              public menu: MenuController) {
+    //Enable side menu
+    this.menu.swipeEnable(true);
+    //Get all the existing cards
     cardService.getAllCards().forEach(cards => {
       this.cards = cards;
       cards.forEach(card => {

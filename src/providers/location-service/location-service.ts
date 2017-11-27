@@ -100,7 +100,8 @@ export class MatchServiceProvider {
               });
               if (this.isMatch(offers)) {
                 if (user.photo) {
-                  match = {
+                  match = {        
+                    id: key,          
                     user: user.userName,
                     photo: user.photo,
                     distance: Math.round(distance),
@@ -108,6 +109,7 @@ export class MatchServiceProvider {
                   };
                 } else {
                   match = {
+                    id: key,
                     user: user.userName,
                     photo: "assets/imgs/avatar.png",
                     distance: Math.round(distance),

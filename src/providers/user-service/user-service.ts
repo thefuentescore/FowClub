@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
-import 'firebase/storage';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -18,7 +18,7 @@ export class UserServiceProvider {
   currentUser: UserData = null;
   userId: string;
 
-  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
+  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp, public local: Storage) {
     afAuth.auth.setPersistence("local");
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -41,6 +41,10 @@ export class UserServiceProvider {
 
   getDatabaseUser() {
     return this.database.database.ref().child(this.basePath).child(this.userId);
+  }
+
+  getUserData(id: string){
+    return this.database.database.ref().child(this.basePath).child(id);
   }
 
   getCurrentUserId() {

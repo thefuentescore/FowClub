@@ -17,7 +17,7 @@
 <ion-content padding>
   <ion-list *ngFor="let item of matches | async">
     <ion-item>
-      <ion-avatar item-start>
+      <ion-avatar item-start (click)="openChat(item.id)">
         <img src="{{item.photo}}">
         <h2>{{item.user}}</h2>
         <p>{{item.distance}} km</p>

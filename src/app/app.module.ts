@@ -1,8 +1,10 @@
+import { ChatviewPage } from './../pages/chatview/chatview';
+import { ChatsPage } from './../pages/chats/chats';
 import { Geolocation } from '@ionic-native/geolocation';
 import { OfferedTab, SearchedTab } from './../pages/list/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, IonicPage } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera'
 
@@ -30,6 +32,8 @@ import { ViewCardImagePage } from '../pages/view-card-image/view-card-image';
 import { EditListCardPage } from '../pages/edit-list-card/edit-list-card';
 import { MatchPage } from '../pages/match/match';
 import { MatchServiceProvider } from '../providers/location-service/location-service';
+import { LoadingPage } from '../pages/loading/loading';
+import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 
 
 export const firebaseConfig ={
@@ -54,7 +58,10 @@ export const firebaseConfig ={
     SearchedTab,
     ViewCardImagePage,
     EditListCardPage,
-    MatchPage
+    MatchPage,
+    LoadingPage,
+    ChatsPage,
+    ChatviewPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +85,10 @@ export const firebaseConfig ={
     SearchedTab,
     ViewCardImagePage,
     EditListCardPage,
-    MatchPage
+    MatchPage,
+    LoadingPage,
+    ChatsPage,
+    ChatviewPage
   ],
   providers: [
     StatusBar,
@@ -90,7 +100,8 @@ export const firebaseConfig ={
     Camera,
     ListServiceProvider,
     MatchServiceProvider,
-    Geolocation
+    Geolocation,
+    ChatServiceProvider
   ]
 })
 export class AppModule {}

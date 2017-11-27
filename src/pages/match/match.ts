@@ -1,3 +1,4 @@
+import { ChatServiceProvider } from './../../providers/chat-service/chat-service';
 import { Match } from './../../models/match';
 import { ListCard } from './../../models/listCard';
 import { MatchServiceProvider } from './../../providers/location-service/location-service';
@@ -8,6 +9,8 @@ import { ListServiceProvider } from '../../providers/list-service/list-service';
 import { AngularFireList } from 'angularfire2/database/interfaces';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { ChatviewPage } from '../chatview/chatview';
 
 
 @Component({
@@ -24,10 +27,15 @@ export class MatchPage {
 
   matches: Observable<Match[]>;
   
-  constructor(private matchService: MatchServiceProvider, private listService: ListServiceProvider,
-    public navCtrl: NavController, public navParams: NavParams,
-    private database: AngularFireDatabase, private geolocation: Geolocation) {
-  }
+  constructor(
+    private matchService: MatchServiceProvider, 
+    private listService: ListServiceProvider, 
+    private userService: UserServiceProvider,
+    private chatService: ChatServiceProvider,
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private database: AngularFireDatabase, 
+    private geolocation: Geolocation) {  }
 
   ionViewDidLoad() {
     this.getLocation();
@@ -40,6 +48,12 @@ export class MatchPage {
     this.geolocation.getCurrentPosition(this.geolocationOptions).then(position =>{
       this.matchService.updateMatches(500, [position.coords.latitude, position.coords.longitude]);
     });
+  }
+
+  openChat(interlocutor: string){
+    let param = {uid: this.userService.getCurrentUserId(), interlocutor: interlocutor};
+    this.chatService.addChats(param.uid, param.interlocutor);
+    this.navCtrl.push(ChatviewPage,param);
   }
 }
 
