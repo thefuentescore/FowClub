@@ -5,25 +5,26 @@
     </button>
     <ion-title>Search</ion-title>
   </ion-navbar>
-  <ion-searchbar  [(ngModel)]="searchName"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchName"></ion-searchbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let card of (cards | namedCard:searchName)">
-    <ion-item>
-      <h2>{{card.name}}</h2>
-    </ion-item>
-    <ion-card-content>
-      <img id="{{card.code}}" src="{{card.image}}" />
-    </ion-card-content>
-    <ion-row>
-      <ion-col>
-        <button ion-button icon-right clear small (click)="openAddPopover(card)">
-          <ion-icon name="add"></ion-icon>
-          <div>Add to list</div>
-        </button>
-      </ion-col>
-    </ion-row>
+  <ion-card *ngFor="let card of (cards | namedCard:searchName); let i = index">
+    <div *ngIf="i<15">
+      <ion-item>
+        <h2>{{card.name}}</h2>
+      </ion-item>
+      <ion-card-content>
+        <img id="{{card.code}}" src="{{card.image}}" />
+      </ion-card-content>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-right clear small (click)="openAddPopover(card)">
+            <ion-icon name="add"></ion-icon>
+            <div>Add to list</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-card>
-
 </ion-content>

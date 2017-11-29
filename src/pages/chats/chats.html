@@ -8,16 +8,11 @@
       </ion-header>
 
 <ion-content>
-     <a ion-item *ngFor="let chat of chats | async" (click)="openChat(chat.key)">
-         <ion-avatar>
-             <img src="/assets/imgs/avatar.jpg">
-         </ion-avatar>
-       <!--
+     <ion-item *ngFor="let chat of chats | async" (click)="openChat(chat)">
         <ion-avatar item-left>
-                <img *ngIf="!(chat | async).photo" src="assets/imgs/avatar.jpg">
-                <img *ngIf="(chat | async).photo" src="{{(chat | async).photo}}">
+                <img *ngIf="!(chat.userInfo | async)?.photo" src="assets/imgs/avatar.png">
+                <img *ngIf="(chat.userInfo | async)?.photo" src="{{(chat.userInfo | async)?.photo}}">
         </ion-avatar>
-        <span>{{(chat | async).userName}}</span>
-    -->
-     </a>
+        <span>{{(chat.userInfo| async)?.userName}}</span>
+     </ion-item>
 </ion-content>

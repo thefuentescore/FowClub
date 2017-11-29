@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { UserServiceProvider } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { AngularFireList } from 'angularfire2/database/interfaces';
 /*
   Generated class for the ChatServiceProvider provider.
 
@@ -13,10 +14,11 @@ export class ChatServiceProvider {
 
   constructor(public userService: UserServiceProvider, private database: AngularFireDatabase) {
     console.log('Hello ChatServiceProvider Provider');
+
   }
 
   //Get list of Chats of the logged User
-  getChats() {
+  getChatList() {
     let id = this.userService.getCurrentUserId();
     return this.database.list(`users/${id}/chats`);
   }
@@ -31,9 +33,22 @@ export class ChatServiceProvider {
     let endpoint2 = this.database.object(`/users/${interlocutor}/chats/${uid}`);
     endpoint2.set(true);
   }
-  getChatRef(uid, interlocutor) {
-    return this.database.list(`/chats/${uid},${interlocutor}`);
+
+  getChat(uid, interlocutor) {
+    let firstRef = this.database.database.ref().child("chats").child(`${uid},${interlocutor}`);
+    let promise = new Promise((resolve, reject) => {
+      firstRef.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          resolve(`/chats/${uid},${interlocutor}`);
+        } else {
+          resolve(`/chats/${interlocutor},${uid}`);
+        }
+      });
+    });
+    return promise;
   }
-}
+  }
+
+
 
 

@@ -7,7 +7,6 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { Storage } from '@ionic/storage';
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -17,7 +16,7 @@ export class LoginPage {
   email: string;
   password: string;
 
-  constructor(public storate: Storage,private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public menu: MenuController, private toast: ToastServiceProvider) {
+  constructor(public storate: Storage, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public menu: MenuController, private toast: ToastServiceProvider) {
     this.menu.swipeEnable(false);
   }
 
@@ -44,5 +43,6 @@ export class LoginPage {
     this.navCtrl.setRoot(HomePage);
   }
 }
+
 
 

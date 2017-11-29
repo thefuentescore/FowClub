@@ -1,9 +1,63 @@
+<!--
+  Generated template for the Chat page.
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
+  
+      <ion-navbar>
+          <ion-title>{{(toUser |async)?.userName}}</ion-title>
+      </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content>
+  
+      <div class="message-wrap">
+  
+          <div *ngFor="let msg of chats | async"
+               class="message"
+               [class.left]=" msg.from === toUserId "
+               [class.right]=" msg.from === uid ">
+              <div class="msg-detail">
+                  <div class="msg-info">
+                      <p>{{msg.fromName}}</p>
+                  </div>
+                  <div class="msg-content">
+                      <span class="triangle"></span>
+                      <p class="line-breaker ">{{msg.message}}</p>
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  </ion-content>
+  
+  <ion-footer no-border>
+      <ion-grid class="input-wrap">
+          <ion-row>
+              <ion-col col-10>
+                  <ion-textarea #chat_input
+                                placeholder="Text Input"
+                                [(ngModel)]="message"
+                                (keyup.enter)="sendMessage()"
+                                (focus)="onFocus()">
+                  </ion-textarea>
+              </ion-col>
+              <ion-col col-2>
+                  <button ion-button clear icon-only item-right (click)="sendMessage()">
+                      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+                  </button>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-footer>
+
+<!--
+  <ion-header>
     <ion-navbar>
       <ion-title>Chat</ion-title>
-      <ion-buttons end>
-        <button ion-button (click)="sendPicture()"><ion-icon name="image" ></ion-icon> Send Image</button>
-      </ion-buttons>
     </ion-navbar>
   </ion-header>
   
@@ -15,18 +69,23 @@
         </div>
     </div>
   </ion-content>
-  
-  <ion-footer>
-    <ion-toolbar>
-      <ion-row>
-        <ion-col width-70>
-            <ion-input type="text"  placeholder="Enter Message"
-                [(ngModel)]="message">
-            </ion-input>
-        </ion-col>
-        <ion-col width-20>
-            <button ion-button full (click)="sendMessage()"><ion-icon name="send"></ion-icon></button>
-        </ion-col>
-      </ion-row>    
-    </ion-toolbar>
-  </ion-footer>
+  <ion-footer no-border>
+    <ion-grid class="input-wrap">
+        <ion-row>
+            <ion-col col-10>
+                <ion-textarea #chat_input
+                              placeholder="Enter message..."
+                              [(ngModel)]="message"
+                              (keyup.enter)="sendMessage()"
+                              (focus)="onFocus()">
+                </ion-textarea>
+            </ion-col>
+            <ion-col col-2>
+                <button ion-button clear icon-only item-right (click)="sendMessage()">
+                    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+-->

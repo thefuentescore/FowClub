@@ -5,6 +5,7 @@ import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { useAnimation } from '@angular/core/src/animation/dsl';
+import { ChatviewPage } from '../chatview/chatview';
 
 /**
  * Generated class for the ChatsPage page.
@@ -18,31 +19,28 @@ import { useAnimation } from '@angular/core/src/animation/dsl';
  })
  export class ChatsPage {
 
-   chats: Observable < any[] > ;
+   chats: Observable<any[]>;
 
    constructor(public chatsProvider: ChatServiceProvider, public userProvider: UserServiceProvider, public database: AngularFireDatabase, public navCtrl: NavController) {
 
-     this.chats = this.chatsProvider.getChats()
-       .snapshotChanges()
-       .map(changes => {
-         return changes.map(c => ({
-             key: c.key,
-             ...this.database.object(this.userProvider.getUserData(c.key))
-           }))
-         });
+    this.chats = this.chatsProvider.getChatList().snapshotChanges().map(actions =>{
+      return actions.map( a =>{
+        const id = a.payload.key;
+        const userInfo = this.userProvider.getUserData(id).valueChanges();
+        return{id, userInfo};
+      });
+    });
      console.log(this.chats);
    }
 
 
-   openChat(key) {
+   openChat(chat) {
      let param = {
        uid: this.userProvider.getCurrentUserId(),
-       interlocutor: key
+       interlocutor: chat.id
      };
-     // this.nav.push(ChatViewPage, param);
+     this.navCtrl.push(ChatviewPage, param);
    }
-
-
  }
 
 

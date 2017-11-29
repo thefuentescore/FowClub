@@ -37,10 +37,11 @@ export class MatchPage {
     private database: AngularFireDatabase, 
     private geolocation: Geolocation) {  }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.getLocation();
     this.matches = this.matchService.getMatches();
   }
+
   ionViewDidLeave(){
     this.matchService.removeMatches();
   }

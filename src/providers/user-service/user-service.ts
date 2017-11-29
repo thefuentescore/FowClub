@@ -40,11 +40,15 @@ export class UserServiceProvider {
   }
 
   getDatabaseUser() {
-    return this.database.database.ref().child(this.basePath).child(this.userId);
+    return this.database.database.ref().child(this.basePath).child(this.afAuth.auth.currentUser.uid);
   }
 
-  getUserData(id: string){
-    return this.database.database.ref().child(this.basePath).child(id);
+  getUserData(id: string) {
+    return this.database.object(this.database.database.ref().child(this.basePath).child(id));
+  }
+
+  getCurrentUserName() {
+    return this.afAuth.auth.currentUser.displayName;
   }
 
   getCurrentUserId() {
@@ -67,12 +71,17 @@ export class UserServiceProvider {
       }).catch(err => {
         console.log(err);
       })
-
       return uploadTask.then(() => {
         data.photo = uploadTask.snapshot.downloadURL;
         this.database.object(`users/${this.userId}`).set(data);
       });
     } else {
+      this.afAuth.auth.currentUser.updateProfile({
+        displayName: data.userName,
+        photoURL: ""
+      }).catch(err => {
+        console.log(err);
+      })
       return this.database.object(`users/${this.userId}`).set(data);
     }
   }

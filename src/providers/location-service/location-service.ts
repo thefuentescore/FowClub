@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import { Match } from '../../models/match';
+
 /*
   Generated class for the LocationServiceProvider provider.
 
