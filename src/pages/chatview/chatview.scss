@@ -98,7 +98,7 @@ page-chatview{
           float: left;
         }
         .msg-detail {
-          padding-left: 60px;
+          padding-left: 1em;
         }
         .user-img {
           left: 0;
@@ -116,7 +116,7 @@ page-chatview{
   
       .message.right {
         .msg-detail {
-          padding-right: 60px;
+          padding-right: 1em;
           .msg-info {
             text-align: right;
           }

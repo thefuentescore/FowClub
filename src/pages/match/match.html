@@ -15,28 +15,33 @@
 
 
 <ion-content padding>
-  <ion-list *ngFor="let item of matches | async">
-    <ion-item>
-      <ion-avatar item-start (click)="openChat(item.id)">
+  <ion-card *ngFor="let item of matches | async">
+    <ion-item (click)="openChat(item.id)">
+      <ion-avatar item-start>
         <img src="{{item.photo}}">
-        <h2>{{item.user}}</h2>
-        <p>{{item.distance}} km</p>
       </ion-avatar>
+      <h2>{{item.user}}</h2>
+      <p>{{item.distance}} km</p>
+    </ion-item>
+    <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let card of item.cards">
+        <div *ngFor="let card of item.cards">
           <ion-row>
-            <ion-col col-8>
-              <p>{{card.name}}</p>
-              <img id="attribute-img" src="assets/icon/attributes/{{card.attribute}}.png" />
+            <p>{{card.code}}</p>
+            <img id="attribute-img" src="assets/icon/attributes/{{card.attribute}}.png" />
+          </ion-row>
+          <ion-row>
+            <ion-col col-8 class="name-column">
+              <h3>{{card.name}}</h3>
             </ion-col>
-            <ion-col>
+            <ion-col class="card-state-column">
               <img id="state-img" src="assets/icon/states/{{card.state}}.png" />
               <img id="brightness-img" src="assets/icon/brightness/{{card.brightness}}.png" />
               <img id="rarity-img" src="assets/icon/rarity/{{card.rarity}}.png" />
             </ion-col>
           </ion-row>
-        </ion-item>
+        </div>
       </ion-list>
-    </ion-item>
-  </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

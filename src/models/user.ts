@@ -5,7 +5,4 @@ export class UserData {
   email: string;
   userName: string;
   photo: string;
-  listaOfrecidas: ListCard[];
-  listaBuscadas: ListCard[];
-  assesments: Assesment[];
 }

@@ -1,3 +1,5 @@
+import { ValorationStarsComponent } from './../pages/valoration-stars/valoration-stars';
+import { MorePopover } from './../pages/user-profile/more-popover/more-popover';
 import { ChatviewPage } from './../pages/chatview/chatview';
 import { ChatsPage } from './../pages/chats/chats';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -34,6 +36,8 @@ import { MatchPage } from '../pages/match/match';
 import { MatchServiceProvider } from '../providers/location-service/location-service';
 import { LoadingPage } from '../pages/loading/loading';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { AssesmentServiceProvider } from '../providers/assesment-service/assesment-service';
 
 
 export const firebaseConfig ={
@@ -61,7 +65,10 @@ export const firebaseConfig ={
     MatchPage,
     LoadingPage,
     ChatsPage,
-    ChatviewPage
+    ChatviewPage,
+    UserProfilePage,
+    MorePopover,
+    ValorationStarsComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +95,10 @@ export const firebaseConfig ={
     MatchPage,
     LoadingPage,
     ChatsPage,
-    ChatviewPage
+    ChatviewPage,
+    UserProfilePage,
+    MorePopover,
+    ValorationStarsComponent
   ],
   providers: [
     StatusBar,
@@ -101,7 +111,8 @@ export const firebaseConfig ={
     ListServiceProvider,
     MatchServiceProvider,
     Geolocation,
-    ChatServiceProvider
+    ChatServiceProvider,
+    AssesmentServiceProvider
   ]
 })
 export class AppModule {}

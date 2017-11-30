@@ -30,7 +30,6 @@ export class CardServiceProvider {
     return this.cards;
   }
   setCardImage(card: Card) {
-    var imageUrl: string;
     var childName = '/cards/' + card.code + '.png';
     const ref = this.firebase.storage().ref().child(childName);
     // Get the download URL

@@ -19,3 +19,18 @@
     max-height: 15px;
     margin-left: 2%;
 }
+.menu-profile{
+    .item-md{
+        background-color: transparent; 
+        .item-inner{
+            border-bottom: 0px;
+
+            h2{
+                font-size: 2rem;
+            }
+            p{
+                font-size: 1rem;
+            }
+        }
+    }
+}

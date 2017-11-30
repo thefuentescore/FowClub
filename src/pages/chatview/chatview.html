@@ -39,7 +39,7 @@
           <ion-row>
               <ion-col col-10>
                   <ion-textarea #chat_input
-                                placeholder="Text Input"
+                                placeholder="Write your message..."
                                 [(ngModel)]="message"
                                 (keyup.enter)="sendMessage()"
                                 (focus)="onFocus()">

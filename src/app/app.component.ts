@@ -1,7 +1,6 @@
+import { Observable } from 'rxjs/Observable';
+import { UserProfilePage } from './../pages/user-profile/user-profile';
 import { ChatsPage } from './../pages/chats/chats';
-import { CardServiceProvider } from './../providers/card-service/card-service';
-import { ProfilePage } from './../pages/profile/profile';
-import { UserServiceProvider } from './../providers/user-service/user-service';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -9,11 +8,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
-import { ListServiceProvider } from '../providers/list-service/list-service';
 import { MatchPage } from '../pages/match/match';
 import { LoadingPage } from '../pages/loading/loading';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
-
+import { AngularFireAuth } from 'angularfire2/auth';
+import { User } from 'firebase/app';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,10 +26,13 @@ export class MyApp {
     component: any
   } > ;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private userService: UserServiceProvider) {
+  user: Observable<User>;
+
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private afAuth: AngularFireAuth) {
     this.initializeApp();
+    this.user = this.afAuth.authState;
     //Check the login status and redirects
-    this.userService.checkAuthentication().subscribe(user => {
+    this.afAuth.authState.subscribe(user => {
       if (user) {
         this.nav.setRoot(HomePage);
       } else {
@@ -69,10 +71,15 @@ export class MyApp {
   }
 
   signOut() {
-    this.userService.logOut().then(() => {
-      this.nav.setRoot(LoginPage).then(()=>{
+    this.afAuth.auth.signOut().then(() => {
+      this.nav.setRoot(LoginPage).then(() => {
         this.menuCtrl.close();
       });
     });
   }
+
+  goMyProfile(){
+    this.nav.setRoot(UserProfilePage);
+  }
 }
+
