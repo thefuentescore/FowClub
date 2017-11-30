@@ -11,23 +11,31 @@
     </button>
     <ion-title>My Profile</ion-title>
     <ion-buttons end>
-        <button ion-button icon-only color="royal" (click)="openMore($event)">
-          <ion-icon name="more"></ion-icon>
-        </button>
-      </ion-buttons>
+      <button ion-button icon-only color="royal" (click)="openMore($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
 
   <ion-row justify-content-center>
     <ion-col class="user-info" col-6>
-      <div class="profile-pic">
-        <img *ngIf="(user | async)?.photo" src="{{(user | async)?.photo}}">
-        <img *ngIf="!(user | async)?.photo" src="assets/imgs/avatar.png">
+
+      <div *ngIf="user | async; let usr; else loading">
+        <div class="profile-pic">
+          <img *ngIf="usr.photo" src="{{usr.photo}}">
+          <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
+        </div>
+        <h2>{{usr.userName}}</h2>
       </div>
-      <h2>{{(user | async)?.userName}}</h2>
-      <p>{{(assesmentInfo | async)?.scoreAverage}}</p>
-      <valoration-stars></valoration-stars>
+
+      <div *ngIf="assesmentInfo | async; let info; else loading">
+        <valoration-stars [valoration]="info.scoreAverage" [starSize]="1"></valoration-stars>
+      </div>
+
+      <ng-template #loading>Loading User Data...</ng-template>
+
     </ion-col>
   </ion-row>
   <ion-row>

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { AssesmentServiceProvider } from '../../providers/assesment-service/assesment-service';
 import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 
@@ -23,8 +23,9 @@ export class UserProfilePage {
 
   user: Observable < any > ;
   userPhoto: string;
-  assesmentInfo: Observable < any > ;
+  assesmentInfo: Observable<any>;
   assesmentList: Observable < any[] > ;
+  info: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,4 +59,3 @@ export class UserProfilePage {
     });
   }
 }
-

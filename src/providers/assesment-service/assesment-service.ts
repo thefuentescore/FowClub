@@ -4,7 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { UserServiceProvider } from '../user-service/user-service';
 import { Assesment } from '../../models/assesment';
 import { Observable } from 'rxjs/Observable';
-import { AngularFireList } from 'angularfire2/database/interfaces';
+import { AngularFireList, AngularFireObject } from 'angularfire2/database/interfaces';
 
 /*
   Generated class for the AssesmentServiceProvider provider.
@@ -21,12 +21,12 @@ class UserAssesment{
 @Injectable()
 export class AssesmentServiceProvider {
   assesmentList: AngularFireList<any[]>;
-  assesmentInfo: Observable<any>;
+  assesmentInfo: AngularFireObject<any>;
   assesmentsRef: any;
   constructor(private database: AngularFireDatabase, private userService: UserServiceProvider) {
     console.log('Hello AssesmentServiceProvider Provider');
     this.assesmentsRef = this.database.database.ref().child('assesments');
-    this.assesmentInfo = this.database.object(this.assesmentsRef.child(this.userService.getCurrentUserId())).valueChanges();
+    this.assesmentInfo = this.database.object(this.assesmentsRef.child(this.userService.getCurrentUserId()));
     this.assesmentList = this.database.list(this.assesmentsRef.child(this.userService.getCurrentUserId()).child('list'));  
   }
 
@@ -40,7 +40,7 @@ export class AssesmentServiceProvider {
     });
   }
   getAssesmentInfo(){
-    return this.assesmentInfo;
+    return this.assesmentInfo.valueChanges();
   }
 }
 
