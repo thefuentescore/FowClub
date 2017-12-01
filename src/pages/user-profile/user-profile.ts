@@ -34,15 +34,7 @@ export class UserProfilePage {
     private assesmentService: AssesmentServiceProvider,
     private popover: PopoverController) {
 
-    this.user = this.db.object(this.userService.getDatabaseUser()).snapshotChanges().map(snapshot => {
-      const userName = snapshot.payload.val().userName;
-      const photo = snapshot.payload.val().photo;
-      this.userPhoto = photo;
-      return {
-        userName,
-        photo
-      };
-    });
+    this.user = this.db.object(this.userService.getDatabaseUser()).valueChanges();
     this.assesmentInfo = this.assesmentService.getAssesmentInfo();
     this.assesmentList = this.assesmentService.getAssesmentList();
 

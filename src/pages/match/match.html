@@ -17,9 +17,9 @@
 <ion-content padding>
   <ion-card *ngFor="let item of matches | async">
     <ion-item (click)="openChat(item.id)">
-      <ion-avatar item-start>
+      <div item-start class="profile-pic">
         <img src="{{item.photo}}">
-      </ion-avatar>
+      </div>
       <h2>{{item.user}}</h2>
       <p>{{item.distance}} km</p>
     </ion-item>

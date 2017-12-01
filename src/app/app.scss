@@ -34,3 +34,27 @@
         }
     }
 }
+
+
+.profile-pic-big {
+    position: relative;
+    width: 7em;
+    height: 7em;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      max-width: 150%;
+    }
+  }
+  .profile-pic {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      max-width: 150%;
+      width: 150%;
+      position: absolute;
+    }
+  }

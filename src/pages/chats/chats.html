@@ -10,10 +10,10 @@
 <ion-content>
   <div *ngFor="let chat of chats | async" (click)="openChat(chat)">
     <ion-item *ngIf="chat.userInfo | async; let usr; else loading">
-      <ion-avatar item-left>
+      <div item-left class="profile-pic">
         <img *ngIf="usr.photo" src="{{usr.photo}}">
         <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
-      </ion-avatar>
+      </div>
       <span>{{usr.userName}}</span>
     </ion-item>
     <ng-template #loading>Loading User Data...</ng-template>

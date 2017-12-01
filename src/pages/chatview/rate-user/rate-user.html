@@ -1,0 +1,26 @@
+<ion-grid>
+  <ion-row justify-content-center>
+      <h2>Rate user's behaviour</h2>
+  </ion-row>
+  <ion-row>
+    <ion-item>
+      <ion-label>Behaviour</ion-label>
+      <ion-select [(ngModel)]="score" interface="popover">
+        <ion-option value=1>Really bad</ion-option>
+        <ion-option value=2>Bad</ion-option>
+        <ion-option value=3>Ok</ion-option>
+        <ion-option value=4>Good</ion-option>
+        <ion-option value=5>Really good</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-item>
+      <ion-label stacked>Comment</ion-label>
+      <ion-textarea type="text" [(ngModel)]="comment" placeholder="Leave your comment..."></ion-textarea>
+    </ion-item>
+  </ion-row>
+  <ion-row justify-content-center class="save-button"> 
+      <button ion-button (click)="saveAssesment()">Save</button>
+  </ion-row>
+</ion-grid>

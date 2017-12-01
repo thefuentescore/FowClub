@@ -38,6 +38,7 @@ import { LoadingPage } from '../pages/loading/loading';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { AssesmentServiceProvider } from '../providers/assesment-service/assesment-service';
+import { RateUserPopover } from '../pages/chatview/rate-user/rate-user';
 
 
 export const firebaseConfig ={
@@ -68,7 +69,8 @@ export const firebaseConfig ={
     ChatviewPage,
     UserProfilePage,
     MorePopover,
-    ValorationStarsComponent
+    ValorationStarsComponent,
+    RateUserPopover
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ export const firebaseConfig ={
     ChatviewPage,
     UserProfilePage,
     MorePopover,
-    ValorationStarsComponent
+    ValorationStarsComponent,
+    RateUserPopover
   ],
   providers: [
     StatusBar,

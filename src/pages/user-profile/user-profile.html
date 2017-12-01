@@ -19,35 +19,36 @@
 </ion-header>
 <ion-content padding>
 
-  <ion-row justify-content-center>
-    <ion-col class="user-info" col-6>
-
-      <div *ngIf="user | async; let usr; else loading">
-        <div class="profile-pic">
-          <img *ngIf="usr.photo" src="{{usr.photo}}">
-          <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
-        </div>
-        <h2>{{usr.userName}}</h2>
-      </div>
-
-      <div *ngIf="assesmentInfo | async; let info; else loading">
-        <valoration-stars [valoration]="info.scoreAverage" [starSize]="1"></valoration-stars>
-      </div>
-
-      <ng-template #loading>Loading User Data...</ng-template>
-
+  <ion-row class="user-info" *ngIf="user | async; let usr; else loading">
+    <ion-col col-8>
+      <h2>{{usr.userName}}</h2>      
+      <valoration-stars [valoration]="usr.score" [starSize]="1" [fontSize]="18"></valoration-stars>
+      <p>{{usr.email}}</p>
     </ion-col>
+    <ion-col col-auto>
+      <div class="profile-pic-big">
+        <img *ngIf="usr.photo" src="{{usr.photo}}">
+        <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
+      </div>
+    </ion-col>
+    <ng-template #loading>Loading User Data...</ng-template>
   </ion-row>
+
   <ion-row>
-    <ion-list>
-      <ion-item *ngFor="let assesment of assesmentList | async">
-        <ion-avatar item-start>
-          <img *ngIf="!(assesment.user | async)?.photo" src="assets/imgs/avatar.png">
-          <img *ngIf="(assesment.user | async)?.photo" src="{{(assesment.user | async)?.photo}}">
-        </ion-avatar>
-        <h2>{{(assesment.user | async)?.userName}}</h2>
-        <p>{{assesment.assesment.message}}</p>
-      </ion-item>
-    </ion-list>
+    <div class="profile-separator">
+      <h5>Opinions</h5>
+    </div>
   </ion-row>
+
+
+  <ion-list>
+    <ion-item *ngFor="let assesment of assesmentList | async">
+      <div item-start class="profile-pic" *ngIf="assesment.user | async; let usr; else loading">
+        <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
+        <img *ngIf="usr.photo" src="{{usr.photo}}">
+      </div>
+      <h2>{{(assesment.user | async)?.userName}}</h2>
+      <p>{{assesment.assesment.message}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

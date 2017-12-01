@@ -8,6 +8,9 @@ import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs/Observable';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
+import { RateUserPopover } from './rate-user/rate-user';
 /**
  * Generated class for the ChatviewPage page.
  *
@@ -20,7 +23,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ChatviewPage {
   message: string;
-  
+
   uid: string;
   userName: string;
 
@@ -32,7 +35,13 @@ export class ChatviewPage {
   chatRef: any;
   @ViewChild(Content) content: Content;
 
-  constructor(public nav: NavController, params: NavParams, public chatsProvider: ChatServiceProvider, public db: AngularFireDatabase, public userProvider: UserServiceProvider) {
+  constructor(public nav: NavController,
+              public params: NavParams, 
+              public chatsProvider: ChatServiceProvider,
+              public db: AngularFireDatabase,
+              public userProvider: UserServiceProvider,
+              public alertCtrl: AlertController,
+              public popover: PopoverController) {
 
     //Current user info
     this.uid = params.data.uid;
@@ -68,6 +77,30 @@ export class ChatviewPage {
 
   onFocus() {
     this.content.scrollToBottom();
+  }
+
+  closeTrade() {
+    let alert = this.alertCtrl.create({
+      title: 'Close trade',
+      message: `Do you want to close a trade and rate the user?`,
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            let  pop = this.popover.create(RateUserPopover, {user: this.toUser});
+            pop.present();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

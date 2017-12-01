@@ -1,19 +1,10 @@
 page-user-profile {
   .user-info {
-      text-align: center;
-      max-width: 100%;
-      width: 100%;
-    .profile-pic {
-      width: 5em;
-      height: 5em;
-      display: block;
-      margin: 0 auto;
-      img {
-        border-radius: 50%;
-        overflow: hidden;
-        width: 5em !important;
-        height: 5em !important;
-      }
-    }
+    max-width: 100%;
+    width: 100%;
+    height: 40%;
+  }
+  .profile-separator{
+    padding: 5px;
   }
 }
