@@ -94,7 +94,7 @@ export class ChatviewPage {
         {
           text: 'Yes',
           handler: () => {
-            let  pop = this.popover.create(RateUserPopover, {user: this.toUser});
+            let  pop = this.popover.create(RateUserPopover, {user: this.toUserId});
             pop.present();
           }
         }

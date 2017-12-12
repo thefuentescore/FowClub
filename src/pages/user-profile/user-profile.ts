@@ -23,7 +23,6 @@ export class UserProfilePage {
 
   user: Observable < any > ;
   userPhoto: string;
-  assesmentInfo: Observable<any>;
   assesmentList: Observable < any[] > ;
   info: any;
 
@@ -35,7 +34,6 @@ export class UserProfilePage {
     private popover: PopoverController) {
 
     this.user = this.db.object(this.userService.getDatabaseUser()).valueChanges();
-    this.assesmentInfo = this.assesmentService.getAssesmentInfo();
     this.assesmentList = this.assesmentService.getAssesmentList();
 
   }

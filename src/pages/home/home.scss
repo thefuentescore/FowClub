@@ -2,4 +2,10 @@ page-home {
     .card-header{
         text-align: center;
     }
+    .searchbar-md{
+        background-color:  color($colors, primary);
+    }
+    .content-md {
+      background-color: color($colors, background);
+    }
 }

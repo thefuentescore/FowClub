@@ -1,4 +1,7 @@
 page-match {
+  .content-md {
+    background-color: color($colors, background);
+  }
   #attribute-img {
     margin-right: 0.5em;
   }
@@ -14,19 +17,17 @@ page-match {
     max-width: 24px;
     max-height: 24px;
   }
-
-  .name-column{
+  .name-column {
     padding: 0;
-    
-    h3{
+    h3 {
       text-align: start;
       padding-top: 0.75em;
     }
   }
-  .card-state-column{
-      img{
-          display: inline;
-          margin-bottom: 0.5em;
-      }
+  .card-state-column {
+    img {
+      display: inline;
+      margin-bottom: 0.5em;
+    }
   }
 }
