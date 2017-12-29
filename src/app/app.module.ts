@@ -6,7 +6,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { OfferedTab, SearchedTab } from './../pages/list/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, IonicPage } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera'
 

@@ -2,7 +2,6 @@ import { ListCard } from './../../models/listCard';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { FirebaseApp } from 'angularfire2';
 import 'firebase/storage';
 /*
   Generated class for the ListServiceProvider provider.
@@ -17,7 +16,7 @@ export class ListServiceProvider {
 
   userId: string;
 
-  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase, private firebase: FirebaseApp) {
+  constructor(private afAuth: AngularFireAuth, private database: AngularFireDatabase) {
     afAuth.auth.setPersistence("local");
     this.afAuth.authState.subscribe(user => {
       if (user) {

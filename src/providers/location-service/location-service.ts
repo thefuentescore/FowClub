@@ -1,4 +1,3 @@
-import { AngularFireList } from 'angularfire2/database/interfaces';
 import { ListCard } from './../../models/listCard';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
@@ -89,7 +88,6 @@ export class MatchServiceProvider {
 
           let match: Match;
           let user: any;
-          let cards: any;
 
           this.dbUsersRef.child(key).once("value", snap => {
             user = snap.val();

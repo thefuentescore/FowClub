@@ -1,8 +1,6 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { UserServiceProvider } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireList } from 'angularfire2/database/interfaces';
 /*
   Generated class for the ChatServiceProvider provider.
 

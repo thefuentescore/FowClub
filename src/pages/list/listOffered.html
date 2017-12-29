@@ -1,41 +1,50 @@
 <ion-header>
-    <ion-navbar color="primary">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Offered List</ion-title>
-    </ion-navbar>
-  </ion-header>
-  <ion-content>
-      <ion-list>
-        <ion-item-sliding *ngFor="let card of list">
-          <ion-item (click)="viewImage(card, $event)">
-            <ion-row>
-              <p>{{card.code}}</p>
-              <img id="attribute-img" src="assets/icon/attributes/{{card.attribute}}.png" />
-            </ion-row>
-            <ion-row>
-              <ion-col col-8 class="name-column">
-                <h3>{{card.name}}</h3>
-              </ion-col>
-              <ion-col>
-                <img id="state-img" src="assets/icon/states/{{card.state}}.png" />
-                <img id="brightness-img" src="assets/icon/brightness/{{card.brightness}}.png" />
-                <img id="rarity-img" src="assets/icon/rarity/{{card.rarity}}.png" />
-              </ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item-options slide="right">
-            <button ion-button color="primary" (click)="editCard(card)"> 
-              <ion-icon name="hammer"></ion-icon>
-              Edit
-            </button>
-            <button ion-button color="danger" (click)="removeCard(card)">
-              <ion-icon name="trash"></ion-icon>
-              Remove
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-    </ion-content>
-    
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Offered List</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="list?.length < 1" class="no-message-box">
+    <ion-grid>
+      <ion-row>
+        <ion-icon name="ios-list-box"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <span>Add cards to your list</span>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-list>
+    <ion-item-sliding *ngFor="let card of list">
+      <ion-item (click)="viewImage(card, $event)">
+        <ion-row>
+          <p>{{card.code}}</p>
+          <img id="attribute-img" src="assets/icon/attributes/{{card.attribute}}.png" />
+        </ion-row>
+        <ion-row>
+          <ion-col col-8 class="name-column">
+            <h3>{{card.name}}</h3>
+          </ion-col>
+          <ion-col class="state-column">
+            <img id="state-img" src="assets/icon/states/{{card.state}}.png" />
+            <img id="brightness-img" src="assets/icon/brightness/{{card.brightness}}.png" />
+            <img *ngIf="card.rarity != 0" id="rarity-img" src="assets/icon/rarity/{{card.rarity}}.png" />
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item-options slide="right">
+        <button ion-button color="primary" (click)="editCard(card)">
+          <ion-icon name="hammer"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="removeCard(card)">
+          <ion-icon name="trash"></ion-icon>
+          Remove
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

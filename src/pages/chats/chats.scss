@@ -1,3 +1,23 @@
 page-chats {
-
+  .no-message-box {
+    width: 100%;
+    height: 100%;
+    display: table;
+    .grid {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .row {
+      text-align: center;
+      color: color($colors, dark);
+      ion-icon {
+        font-size: 4em;
+        width: 100%;
+      }
+      span {
+        font-size: 1.2em;
+        width: 100%;
+      }
+    }
+  }
 }

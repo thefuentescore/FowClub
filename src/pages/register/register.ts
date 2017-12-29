@@ -1,10 +1,7 @@
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserData } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 import { Loading } from 'ionic-angular/components/loading/loading';
 /**
  * Generated class for the RegisterPage page.
@@ -27,7 +24,6 @@ export class RegisterPage {
     private userService: UserServiceProvider, 
     public navCtrl: NavController,
      public navParams: NavParams, 
-     private toast: ToastServiceProvider, 
      private loadingCtrl: LoadingController) {}
 
   register() {

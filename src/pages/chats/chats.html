@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary"> 
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,6 +8,16 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="(chats | async)?.length < 1" class="no-message-box">
+    <ion-grid>
+      <ion-row>
+        <ion-icon name="chatbubbles"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <span>You don't have any conversation</span>
+      </ion-row>
+    </ion-grid>
+  </div>
   <div *ngFor="let chat of chats | async" (click)="openChat(chat)">
     <ion-item *ngIf="chat.userInfo | async; let usr; else loading">
       <div item-left class="profile-pic">

@@ -1,4 +1,3 @@
-import { firebaseConfig } from './../../app/app.module';
 import { UserData } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';

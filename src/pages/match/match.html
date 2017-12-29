@@ -37,7 +37,7 @@
             <ion-col class="card-state-column">
               <img id="state-img" src="assets/icon/states/{{card.state}}.png" />
               <img id="brightness-img" src="assets/icon/brightness/{{card.brightness}}.png" />
-              <img id="rarity-img" src="assets/icon/rarity/{{card.rarity}}.png" />
+              <img *ngIf="card.rarity != 0" id="rarity-img" src="assets/icon/rarity/{{card.rarity}}.png" />
             </ion-col>
           </ion-row>
         </div>

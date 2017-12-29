@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { ChatServiceProvider } from '../../providers/chat-service/chat-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { useAnimation } from '@angular/core/src/animation/dsl';
 import { ChatviewPage } from '../chatview/chatview';
 
 /**

@@ -1,11 +1,9 @@
 import { MorePopover } from './more-popover/more-popover';
-import { Assesment } from './../../models/assesment';
-import { UserData } from './../../models/user';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AssesmentServiceProvider } from '../../providers/assesment-service/assesment-service';
 import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 

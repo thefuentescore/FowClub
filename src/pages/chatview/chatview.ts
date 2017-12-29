@@ -1,4 +1,3 @@
-import { Match } from './../../models/match';
 import { AngularFireList } from 'angularfire2/database/interfaces';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';

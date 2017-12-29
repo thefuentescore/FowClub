@@ -1,11 +1,36 @@
 page-list {
-  .name-column{
+  .name-column {
     padding: 0;
-    
-    h3{
+    margin: auto;
+    h3 {
       text-align: start;
       padding-top: 0.75em;
     }
   }
-  
+  .state-column {
+    img {
+      max-width: 25%;
+    }
+  }
+  .no-message-box {
+    width: 100%;
+    height: 100%;
+    display: table;
+    .grid {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .row {
+      text-align: center;
+      color: color($colors, dark);
+      ion-icon {
+        font-size: 4em;
+        width: 100%;
+      }
+      span {
+        font-size: 1.2em;
+        width: 100%;
+      }
+    }
+  }
 }

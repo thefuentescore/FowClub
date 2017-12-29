@@ -17,7 +17,6 @@ export class ValorationStarsComponent {
     this.printStars(this.starsNumber, this.starSize);
   }
   printStars(starsNumber, starSize) {
-    let start = 1;
     let end = starSize;
     let valoration = this.valoration + 1;
     if (starSize <= 1) {

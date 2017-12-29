@@ -1,13 +1,9 @@
 import { ChatServiceProvider } from './../../providers/chat-service/chat-service';
 import { Match } from './../../models/match';
-import { ListCard } from './../../models/listCard';
 import { MatchServiceProvider } from './../../providers/location-service/location-service';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { ListServiceProvider } from '../../providers/list-service/list-service';
-import { AngularFireList } from 'angularfire2/database/interfaces';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ChatviewPage } from '../chatview/chatview';
@@ -28,13 +24,11 @@ export class MatchPage {
   matches: Observable<Match[]>;
   
   constructor(
-    private matchService: MatchServiceProvider, 
-    private listService: ListServiceProvider, 
+    private matchService: MatchServiceProvider,
     private userService: UserServiceProvider,
     private chatService: ChatServiceProvider,
     public navCtrl: NavController, 
-    public navParams: NavParams,
-    private database: AngularFireDatabase, 
+    public navParams: NavParams, 
     private geolocation: Geolocation) {  }
 
   ionViewDidEnter() {
