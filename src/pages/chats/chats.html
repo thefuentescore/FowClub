@@ -25,6 +25,7 @@
         <img *ngIf="!usr.photo" src="assets/imgs/avatar.png">
       </div>
       <span>{{usr.userName}}</span>
+      <span *ngIf="chat.newMessage | async; let msg;">{{msg.newMessages}}</span>
     </ion-item>
     <ng-template #loading>Loading User Data...</ng-template>
   </div>

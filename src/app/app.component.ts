@@ -1,3 +1,4 @@
+import { UserServiceProvider } from './../providers/user-service/user-service';
 import { Observable } from 'rxjs/Observable';
 import { UserProfilePage } from './../pages/user-profile/user-profile';
 import { ChatsPage } from './../pages/chats/chats';
@@ -13,6 +14,7 @@ import { LoadingPage } from '../pages/loading/loading';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'firebase/app';
+import { ProfilePage } from '../pages/profile/profile';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,13 +30,21 @@ export class MyApp {
 
   user: Observable<User>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private afAuth: AngularFireAuth) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, 
+    public menuCtrl: MenuController, private afAuth: AngularFireAuth, public userService: UserServiceProvider) {
+
     this.initializeApp();
     this.user = this.afAuth.authState;
     //Check the login status and redirects
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.nav.setRoot(HomePage);
+        this.userService.getDatabaseUser().on('value', snapshot => {
+          if (snapshot.exists()) {
+            this.nav.setRoot(HomePage);
+          } else {
+            this.nav.setRoot(ProfilePage);
+          }
+        });
       } else {
         this.nav.setRoot(LoginPage);
       }

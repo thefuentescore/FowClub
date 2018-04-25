@@ -29,6 +29,8 @@ export class ChatviewPage {
   toUserId: string;
   toUser: Observable < any > ;
 
+
+
   chats: Observable < any[] > ;
   fireListChat: AngularFireList < any[] > ;
   chatRef: any;
@@ -58,21 +60,23 @@ export class ChatviewPage {
 
   ionViewDidEnter() {
     this.content.scrollToBottom();
+    this.chatsProvider.refreshNewMessages(this.toUserId);
   }
 
+sendMessage(userName: string) {
+  if (this.message) {
+    let chat = {
+      from: this.uid,
+      fromName: this.userName,
+      message: this.message,
+      type: 'message'
+    };
+    this.db.database.ref(this.chatRef).push(chat);
+    this.chatsProvider.addNewMessageToUser(this.toUserId);
+    this.message = "";
+  }
+};
 
-  sendMessage(userName: string) {
-    if (this.message) {
-      let chat = {
-        from: this.uid,
-        fromName: this.userName,
-        message: this.message,
-        type: 'message'
-      };
-      this.db.database.ref(this.chatRef).push(chat);
-      this.message = "";
-    }
-  };
 
   onFocus() {
     this.content.scrollToBottom();

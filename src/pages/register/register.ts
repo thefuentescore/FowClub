@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { Loading } from 'ionic-angular/components/loading/loading';
+import { LoginPage } from '../login/login';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -19,19 +20,19 @@ export class RegisterPage {
   email: string;
   password: string;
 
-  loading : Loading;
+  loading: Loading;
   constructor(
-    private userService: UserServiceProvider, 
+    private userService: UserServiceProvider,
     public navCtrl: NavController,
-     public navParams: NavParams, 
-     private loadingCtrl: LoadingController) {}
+    public navParams: NavParams,
+    private loadingCtrl: LoadingController) {}
 
   register() {
     this.showLoading();
     this.userService.register(this.email, this.password)
-    .then(() => {
-      this.navCtrl.popToRoot();
-    });
+      .then(() => {
+        this.navCtrl.pop();
+      });
   }
   showLoading() {
     this.loading = this.loadingCtrl.create({

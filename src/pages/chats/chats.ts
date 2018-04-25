@@ -26,7 +26,8 @@ import { ChatviewPage } from '../chatview/chatview';
       return actions.map( a =>{
         const id = a.payload.key;
         const userInfo = this.userProvider.getUserData(id).valueChanges();
-        return{id, userInfo};
+        const newMessage =  this.chatsProvider.getChatNewMessages(id).valueChanges();        
+        return{id, userInfo, newMessage};
       });
     });
      console.log(this.chats);
@@ -40,6 +41,7 @@ import { ChatviewPage } from '../chatview/chatview';
      };
      this.navCtrl.push(ChatviewPage, param);
    }
+
  }
 
 

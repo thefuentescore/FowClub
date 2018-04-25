@@ -51,39 +51,3 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
-
-<!--
-  <ion-header>
-    <ion-navbar>
-      <ion-title>Chat</ion-title>
-    </ion-navbar>
-  </ion-header>
-  
-  <ion-content padding class="chat-view" id="chat-view">  
-    <div class="messages">
-        <div class="message" *ngFor="let chat of chats | async" [ngClass]="{'me': uid === chat.from}">
-              <span *ngIf="chat.message">{{chat.message}}</span>
-              <img *ngIf="chat.picture" src="{{chat.picture}}" class="picture">
-        </div>
-    </div>
-  </ion-content>
-  <ion-footer no-border>
-    <ion-grid class="input-wrap">
-        <ion-row>
-            <ion-col col-10>
-                <ion-textarea #chat_input
-                              placeholder="Enter message..."
-                              [(ngModel)]="message"
-                              (keyup.enter)="sendMessage()"
-                              (focus)="onFocus()">
-                </ion-textarea>
-            </ion-col>
-            <ion-col col-2>
-                <button ion-button clear icon-only item-right (click)="sendMessage()">
-                    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-footer>
--->
